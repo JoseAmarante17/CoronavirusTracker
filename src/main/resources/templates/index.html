@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Coronavirus Tracker Application</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<style>
+    h1 {
+        color: rgb(49, 134, 134);
+        font-weight: bold;
+    }
+
+    tr th {
+        color: rgb(49, 134, 134);
+        font-size: 15pt;
+    }
+
+    tr td {
+        font-size: 14pt;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .title p {
+        font-size: 15pt;
+        font-weight: bold;
+    }
+
+    .content p{
+        font-size: larger;
+    }
+
+    .content strong{
+        color: rgb(49, 134, 134);
+    }
+
+    .jumbotron {
+        text-align: center;
+        font-weight: bold;
+        font-size: larger;
+    }
+
+    #num {
+        color: rgb(49, 134, 134);
+    }
+
+    footer {
+        text-align: center;
+
+    }
+
+    footer h3 {
+        color: rgb(49, 134, 134);
+        font-style: italic;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>Coronavirus Tracker Application</h1>
+            <p>This application lists the current number of cases reported across the globe</p>
+        </div>
+
+        <div class="content">
+            <p>
+                The ongoing <strong>global pandemic of coronavirus disease 2019 (COVID-19) </strong> caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). The virus was first<strong> identified in Wuhan, China in December 2019.</strong> In January 2020, China implemented a nationwide lockdown in Wuhan but were unable to contain the virus, with it spreading to other parts of mainland China and eventually spreading around the world. <strong>The World Health Organization declared the virus a Public Health Emergency of International Concern on 30 January 2020,</strong> and later a pandemic on 11 March 2020. As of 13 July 2021, more than 187 million cases have been confirmed,<strong> with more than 4.03 million confirmed deaths attributed to COVID-19</strong>, making it one of the deadliest pandemics in history.
+            </p>
+
+        </div>
+        <div class="jumbotron">
+            <h1 class="display-4" th:text="${#numbers.formatDecimal(totalReportedCases, 0, 'COMMA', 0, 'POINT')}"></h1>
+            <p class="lead">Total cases reported as of today</p>
+            <hr class="my-4">
+            <p>
+                <span>New cases reported since previous day:</span>
+                <span th:text="${#numbers.formatDecimal(totalNewCases, 0, 'COMMA', 0, 'POINT')}" id="num"></span>
+            </p>
+
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>State</th>
+                <th>Country</th>
+                <th>Total cases reported</th>
+                <th>Changes since last day</th>
+            </tr>
+            <tr th:each="locationStat : ${locationStats}">
+                <td th:text="${locationStat.state}"></td>
+                <td th:text="${locationStat.country}"></td>
+                <td th:text="${#numbers.formatDecimal(locationStat.latestTotalCases, 0, 'COMMA', 0, 'POINT')}">0</td>
+                <td th:text="${#numbers.formatDecimal(locationStat.diffFromPrevDay, 0, 'COMMA', 0, 'POINT')}">0</td>
+            </tr>
+        </table>
+    </div>
+
+    <footer>
+        <h3>&copy; Jose Amarante</h3>
+    </footer>
+</body>
+
+</html>
